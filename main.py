@@ -49,10 +49,10 @@ async def read_root(request: Request, user: models.User = Depends(get_current_us
     
     # Sample stats for dashboard
     stats = [
-        {"title": "Total Students", "value": "120", "trend": "+5", "icon": "users"},
-        {"title": "Graduation Rate", "value": "98%", "trend": "+1%", "icon": "graduation-cap"},
-        {"title": "Active Projects", "value": "45", "trend": "+12", "icon": "briefcase"},
-        {"title": "Attendance", "value": "95.5%", "trend": "-0.5%", "icon": "check-circle"},
+        {"title": "전체 학생 수", "value": "120", "trend": "+5", "icon": "users"},
+        {"title": "졸업률", "value": "98%", "trend": "+1%", "icon": "graduation-cap"},
+        {"title": "진행 중인 프로젝트", "value": "45", "trend": "+12", "icon": "briefcase"},
+        {"title": "출석률", "value": "95.5%", "trend": "-0.5%", "icon": "check-circle"},
     ]
     return templates.TemplateResponse("index.html", {"request": request, "user": user, "stats": stats})
 

@@ -24,10 +24,10 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const filters = [
-    { name: 'All', icon: Users, label: 'All Students' },
-    { name: 'Classes', icon: DoorOpen, label: 'Class 7A' },
-    { name: 'Clubs', icon: Beaker, label: 'STEM Club' },
-    { name: 'Atelier', icon: Palette, label: 'Arts Atelier' },
+    { name: 'All', icon: Users, label: '전체 학생' },
+    { name: 'Classes', icon: DoorOpen, label: '7학년 A반' },
+    { name: 'Clubs', icon: Beaker, label: 'STEM 동아리' },
+    { name: 'Atelier', icon: Palette, label: '미술 아틀리에' },
   ];
 
   return (
@@ -39,14 +39,14 @@ export default function App() {
             <School className="text-secondary w-6 h-6 md:w-8 md:h-8" />
           </div>
           <h1 className="text-xl md:text-2xl font-black text-secondary font-headline tracking-tight">
-            Seoul Middle School
+            서울중학교
           </h1>
         </div>
         
         <div className="flex items-center gap-2">
           <button className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-primary-container/20 transition-colors active:scale-95 duration-200">
             <Search className="text-secondary w-5 h-5" />
-            <span className="font-headline font-bold text-secondary hidden sm:inline">Search</span>
+            <span className="font-headline font-bold text-secondary hidden sm:inline">검색</span>
           </button>
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -60,7 +60,7 @@ export default function App() {
       <div className="flex flex-1 relative">
         {/* Navigation Drawer (Desktop) */}
         <aside className="hidden lg:flex sticky top-20 h-[calc(100vh-5rem)] w-64 flex-col p-4 font-medium border-r border-primary/10">
-          <h2 className="px-6 py-4 text-secondary text-xs font-bold uppercase tracking-widest">Filters</h2>
+          <h2 className="px-6 py-4 text-secondary text-xs font-bold uppercase tracking-widest">필터</h2>
           <nav className="space-y-2">
             {filters.map((filter) => (
               <button
@@ -98,7 +98,7 @@ export default function App() {
               >
                 <div className="flex items-center gap-3 mb-8 px-4 pt-4">
                   <School className="text-secondary w-6 h-6" />
-                  <span className="font-headline font-bold text-secondary">Menu</span>
+                  <span className="font-headline font-bold text-secondary">메뉴</span>
                 </div>
                 <nav className="space-y-2">
                   {filters.map((filter) => (
@@ -132,10 +132,10 @@ export default function App() {
             className="mb-12"
           >
             <h2 className="text-4xl md:text-6xl font-headline font-extrabold text-primary mb-4 leading-tight tracking-tight">
-              Student Gallery
+              학생 갤러리
             </h2>
             <p className="text-on-surface-variant max-w-xl text-lg font-medium leading-relaxed">
-              Welcome to the Academic Atelier. Explore student self-introductions for the 2024-2025 semester.
+              학술 아틀리에에 오신 것을 환영합니다. 2024-2025 학기 학생들의 자기소개를 살펴보세요.
             </p>
           </motion.header>
 
@@ -151,16 +151,20 @@ export default function App() {
       {/* Footer */}
       <footer className="w-full bg-background py-12 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center border-t border-primary/10 font-body text-xs uppercase tracking-widest text-primary font-bold">
         <div className="mb-6 md:mb-0 text-center md:text-left opacity-60">
-          © 2024 Seoul Middle School | The Academic Atelier
+          © 2024 서울중학교 | 학술 아틀리에
         </div>
         <div className="flex flex-wrap justify-center gap-8">
-          {['Privacy Policy', 'Staff Portal', 'Support'].map((link) => (
+          {[
+            { label: '개인정보 처리방침', key: 'Privacy Policy' },
+            { label: '교직원 포털', key: 'Staff Portal' },
+            { label: '고객 지원', key: 'Support' }
+          ].map((link) => (
             <a 
-              key={link}
+              key={link.key}
               href="#" 
               className="hover:text-secondary transition-colors hover:opacity-100 opacity-60"
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </div>
@@ -177,7 +181,7 @@ export default function App() {
             }`}
           >
             <filter.icon className={`w-6 h-6 ${activeFilter === filter.name ? 'fill-current' : ''}`} />
-            <span className="text-[10px] font-bold uppercase tracking-wider">{filter.name}</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">{filter.label}</span>
           </button>
         ))}
       </div>
@@ -212,13 +216,13 @@ function StudentCard({ student, index }: StudentCardProps) {
       
       <div className="w-full">
         <span className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-2 block opacity-80">
-          Grade {student.grade}
+          {student.grade}학년
         </span>
         <h3 className="text-xl font-headline font-extrabold text-on-surface mb-6 tracking-tight">
           {student.name}
         </h3>
         <button className="w-full py-3.5 bg-secondary text-on-secondary rounded-2xl font-headline font-bold hover:bg-secondary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group/btn shadow-lg shadow-secondary/20">
-          Read More
+          더 보기
           <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
         </button>
       </div>
