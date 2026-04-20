@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Work Sans", sans-serif;
+
+  --color-primary: #785500;
+  --color-primary-container: #fcb812;
+  --color-secondary: #7345a3;
+  --color-secondary-container: #e4c6ff;
+  --color-tertiary: #006852;
+  --color-background: #fff5e5;
+  --color-surface: #fff5e5;
+  --color-on-surface: #3b2d00;
+  --color-on-surface-variant: #6c5a22;
+  --color-surface-container: #ffe6a6;
+  --color-surface-container-highest: #fada80;
+  --color-on-background: #3b2d00;
+  --color-on-primary: #fff1de;
+  --color-on-secondary: #fbefff;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-body;
+  }
+}

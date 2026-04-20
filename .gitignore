@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+test.db
+static/uploads/*
+!static/uploads/default.png
+.vscode/
+.idea/
+node_modules/
+dist/
+.vercel

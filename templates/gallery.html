@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Gallery - Gemini Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+        .student-card { background: white; border-radius: 1.25rem; overflow: hidden; border: 1px solid #e2e8f0; transition: 0.3s; }
+        .student-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .student-image { height: 220px; width: 100%; object-fit: cover; }
+        .portfolio-section { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid #f1f5f9; }
+        .portfolio-label { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.25rem; }
+        .portfolio-content { font-size: 0.875rem; color: #475569; margin-bottom: 0.75rem; }
+        .comment-box { background: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; margin-top: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header"><i data-lucide="layout-dashboard"></i> <span>Gemini Dashboard</span></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/"><i data-lucide="home"></i> <span>Overview</span></a></li>
+                    {% if user.role == 'admin' %}
+                    <li><a href="/students"><i data-lucide="users"></i> <span>Manage Students</span></a></li>
+                    {% endif %}
+                    <li class="active"><a href="/gallery"><i data-lucide="image"></i> <span>Gallery</span></a></li>
+                    <li><a href="/logout"><i data-lucide="log-out"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-section">
+                <h1>Student Portfolio Gallery</h1>
+                <p>Showcasing the achievements and goals of our students.</p>
+            </div>
+
+            <div class="gallery-grid">
+                {% for student in students %}
+                <div class="student-card">
+                    <img src="{{ student.image_url }}" class="student-image" alt="{{ student.name }}">
+                    <div class="student-info" style="padding: 1.5rem;">
+                        <span class="badge">Grade {{ student.grade }}</span>
+                        <h3>{{ student.name }}</h3>
+                        <p style="color: #64748b; font-size: 0.875rem;">{{ student.bio }}</p>
+                        
+                        <div class="portfolio-section">
+                            <div class="portfolio-label">Key Projects</div>
+                            <div class="portfolio-content">{{ student.projects or 'No projects listed' }}</div>
+                            
+                            <div class="portfolio-label">Achievements</div>
+                            <div class="portfolio-content">{{ student.achievements or 'No achievements listed' }}</div>
+                        </div>
+
+                        {% if user.role == 'admin' and student.teacher_comments %}
+                        <div class="comment-box">
+                            <div class="portfolio-label" style="color: #ef4444;">Teacher's Note</div>
+                            <div class="portfolio-content" style="color: #b91c1c;">{{ student.teacher_comments }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

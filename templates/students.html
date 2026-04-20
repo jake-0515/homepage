@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - Gemini Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header"><i data-lucide="layout-dashboard"></i> <span>Gemini Dashboard</span></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/"><i data-lucide="home"></i> <span>Overview</span></a></li>
+                    <li class="active"><a href="/students"><i data-lucide="users"></i> <span>Manage Students</span></a></li>
+                    <li><a href="/gallery"><i data-lucide="image"></i> <span>Gallery</span></a></li>
+                    <li><a href="/logout"><i data-lucide="log-out"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-section">
+                <h1>Student Management</h1>
+                <p>Register and manage student academic profiles.</p>
+            </div>
+
+            <!-- Create Student Form -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3>Add New Student Profile</h3>
+                <form action="/students/create" method="post" enctype="multipart/form-data" class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input type="text" name="student_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <input type="number" name="grade" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Interests</label>
+                        <input type="text" name="interests" placeholder="e.g. Science, Basketball">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Profile Image</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Bio</label>
+                        <textarea name="bio" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="grid-column: span 2; justify-content: center;">
+                        <i data-lucide="user-plus"></i> Create Student
+                    </button>
+                </form>
+            </div>
+
+            <!-- Student List Table -->
+            <div class="card">
+                <h3>Student Records</h3>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>ID</th>
+                            <th>Grade</th>
+                            <th>Interests</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <img src="{{ student.image_url }}" alt="" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">
+                                    <strong>{{ student.name }}</strong>
+                                </div>
+                            </td>
+                            <td>{{ student.student_id }}</td>
+                            <td>{{ student.grade }}</td>
+                            <td>{{ student.interests }}</td>
+                            <td>
+                                <div style="display: flex; gap: 1rem;">
+                                    <a href="/students/edit/{{ student.id }}" style="color: #6366f1;"><i data-lucide="edit"></i></a>
+                                    <a href="/students/delete/{{ student.id }}" style="color: #ef4444;"><i data-lucide="trash-2"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

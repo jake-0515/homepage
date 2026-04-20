@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student - Gemini Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header"><i data-lucide="layout-dashboard"></i> <span>Gemini Dashboard</span></div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/"><i data-lucide="home"></i> <span>Overview</span></a></li>
+                    <li class="active"><a href="/students"><i data-lucide="users"></i> <span>Manage Students</span></a></li>
+                    <li><a href="/gallery"><i data-lucide="image"></i> <span>Gallery</span></a></li>
+                    <li><a href="/logout"><i data-lucide="log-out"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-section">
+                <h1>Edit Student Profile</h1>
+                <a href="/students" class="btn-secondary">Back to List</a>
+            </div>
+
+            <div class="card">
+                <form action="/students/update/{{ student.id }}" method="post" enctype="multipart/form-data" class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" value="{{ student.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Student ID (ReadOnly)</label>
+                        <input type="text" value="{{ student.student_id }}" disabled style="background: #f1f5f9;">
+                    </div>
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <input type="number" name="grade" value="{{ student.grade }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Interests (comma separated)</label>
+                        <input type="text" name="interests" value="{{ student.interests }}">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Profile Image (Leave empty to keep current)</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Bio</label>
+                        <textarea name="bio" rows="3">{{ student.bio }}</textarea>
+                    </div>
+                    
+                    <h3 style="grid-column: span 2; margin-top: 1rem;">Portfolio</h3>
+                    <div class="form-group">
+                        <label>Projects</label>
+                        <textarea name="projects" rows="4">{{ student.projects }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Achievements</label>
+                        <textarea name="achievements" rows="4">{{ student.achievements }}</textarea>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Future Goals</label>
+                        <textarea name="goals" rows="3">{{ student.goals }}</textarea>
+                    </div>
+
+                    <h3 style="grid-column: span 2; margin-top: 1rem; color: #6366f1;">Teacher Administration</h3>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Teacher Comments (Confidential)</label>
+                        <textarea name="teacher_comments" rows="4" style="border-color: #6366f1;">{{ student.teacher_comments }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="grid-column: span 2; justify-content: center; margin-top: 1rem;">
+                        <i data-lucide="save"></i> Update Profile
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
