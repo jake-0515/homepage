@@ -54,11 +54,11 @@ async def read_root(request: Request, user: models.User = Depends(get_current_us
         {"title": "진행 중인 프로젝트", "value": "45", "trend": "+12", "icon": "briefcase"},
         {"title": "출석률", "value": "95.5%", "trend": "-0.5%", "icon": "check-circle"},
     ]
-    return templates.TemplateResponse("index.html", {"request": request, "user": user, "stats": stats})
+    return templates.TemplateResponse(request, "index.html", {"user": user, "stats": stats})
 
 @app.get("/login")
 async def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse(request, "login.html")
 
 @app.post("/login")
 async def login(response: Response, username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
@@ -83,7 +83,7 @@ async def list_students(request: Request, db: Session = Depends(get_db), user: m
     if not user or user.role != "admin":
         return RedirectResponse(url="/")
     students = db.query(models.Student).all()
-    return templates.TemplateResponse("students.html", {"request": request, "user": user, "students": students})
+    return templates.TemplateResponse(request, "students.html", {"user": user, "students": students})
 
 @app.post("/students/create")
 async def create_student(
@@ -141,7 +141,7 @@ async def edit_student_page(id: int, request: Request, db: Session = Depends(get
     student = db.query(models.Student).filter(models.Student.id == id).first()
     if not student:
         return RedirectResponse(url="/students")
-    return templates.TemplateResponse("edit_student.html", {"request": request, "user": user, "student": student})
+    return templates.TemplateResponse(request, "edit_student.html", {"user": user, "student": student})
 
 @app.post("/students/update/{id}")
 async def update_student(
@@ -187,7 +187,7 @@ async def gallery_page(request: Request, db: Session = Depends(get_db), user: mo
     if not user:
         return RedirectResponse(url="/login")
     students = db.query(models.Student).all()
-    return templates.TemplateResponse("gallery.html", {"request": request, "user": user, "students": students})
+    return templates.TemplateResponse(request, "gallery.html", {"user": user, "students": students})
 
 # Initial user setup
 @app.on_event("startup")
